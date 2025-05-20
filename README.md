@@ -6,10 +6,17 @@ This project is a simple and interactive pace calculator built with React, TypeS
 
 ## Features
 
-- Select pre-defined distances or input custom values.
-- Toggle between metric and imperial units.
-- User-friendly time picker with dropdowns for hours, minutes, and seconds.
-- Real-time pace calculation with dynamic unit adjustment.
+- Three calculation modes:
+  - Calculate Pace: Determine your pace based on distance and time
+  - Calculate Time: Estimate your finish time based on distance and target pace
+  - Riegel's Formula: Predict race times for new distances based on previous race results
+- Support for both metric (kilometers) and imperial (miles) units with automatic conversion
+- Pre-defined common race distances (1km, 5km, 10km, Half Marathon, Marathon, etc.)
+- Custom distance input with decimal support
+- User-friendly time picker with dropdowns for hours, minutes, and seconds
+- Dark mode support with system preference detection and manual toggle
+- Real-time calculations with automatic unit conversion
+- Responsive design with modern UI components
 
 ## Tech Stack
 
