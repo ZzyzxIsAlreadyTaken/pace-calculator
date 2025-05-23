@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import DistanceInput from "./DistanceInput";
 import TimePicker from "./TimePicker";
 import UnitToggle from "./UnitToggle";
