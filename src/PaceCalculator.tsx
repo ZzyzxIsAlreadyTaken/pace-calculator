@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import RiegelForm from "./components/RiegelForm";
 import PaceForm from "./components/PaceForm";
 import TimeForm from "./components/TimeForm";
+import { Button } from "./components/Button";
 
 const PaceCalculator = () => {
   const [activeTab, setActiveTab] = useState("pace"); // 'pace', 'time', 'riegel'
@@ -30,19 +31,24 @@ const PaceCalculator = () => {
   return (
     <div className="max-w-md mx-auto mt-12 px-6 py-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700">
       <div className="flex justify-end mb-2">
-        <button
+        <Button
           onClick={() => setDarkMode((d) => !d)}
           className="px-3 py-1 rounded-lg border bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
         >
           {darkMode ? "☀️" : "🌙"}
-        </button>
+        </Button>
       </div>
       <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
-        🏃‍♂️ Pace Calculator
+        <img
+          src="/src/assets/runmetrics.png"
+          alt="Runmetrics"
+          className="w-10 h-10 inline-block mr-2"
+        />
+        Runmetrics
       </h2>
 
       <div className="flex justify-center mb-6 space-x-4">
-        <button
+        <Button
           className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${
             activeTab === "pace"
               ? "bg-blue-600 text-white"
@@ -53,8 +59,8 @@ const PaceCalculator = () => {
           }}
         >
           Calculate Pace
-        </button>
-        <button
+        </Button>
+        <Button
           className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${
             activeTab === "time"
               ? "bg-blue-600 text-white"
@@ -65,8 +71,8 @@ const PaceCalculator = () => {
           }}
         >
           Calculate Time
-        </button>
-        <button
+        </Button>
+        <Button
           className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${
             activeTab === "riegel"
               ? "bg-blue-600 text-white"
@@ -75,7 +81,7 @@ const PaceCalculator = () => {
           onClick={() => setActiveTab("riegel")}
         >
           Riegel's Formula
-        </button>
+        </Button>
       </div>
 
       {activeTab === "pace" ? (

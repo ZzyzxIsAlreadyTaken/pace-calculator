@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch } from "@/components/ui/switch";
 
 interface UnitToggleProps {
   unit: string;
@@ -11,12 +12,9 @@ const UnitToggle: React.FC<UnitToggleProps> = ({ unit, onToggle }) => {
       <span className="text-sm font-semibold text-gray-700 dark:text-gray-100">
         Unit: {unit === "metric" ? "Kilometers" : "Miles"}
       </span>
-      <button
-        onClick={onToggle}
-        className="py-1 px-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-100 font-bold rounded-lg transition duration-200"
-      >
+      <Switch onClick={onToggle}>
         Toggle to {unit === "metric" ? "Miles" : "Kilometers"}
-      </button>
+      </Switch>
     </div>
   );
 };

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 200 100">
+    <!-- Background (optional, can be removed for transparent) -->
+    <rect width="100%" height="100%" fill="#0D1B2A"/>
+
+    <!-- Runner icon (simplified human figure) -->
+    <circle cx="30" cy="30" r="8" fill="white"/>
+    <line x1="30" y1="38" x2="30" y2="55" stroke="white" stroke-width="4"/>
+    <line x1="30" y1="45" x2="18" y2="60" stroke="white" stroke-width="4"/>
+    <line x1="30" y1="45" x2="42" y2="55" stroke="white" stroke-width="4"/>
+    <line x1="30" y1="55" x2="22" y2="75" stroke="white" stroke-width="4"/>
+    <line x1="30" y1="55" x2="38" y2="70" stroke="white" stroke-width="4"/>
+
+    <!-- Text: RUNMETRICS -->
+    <text x="60" y="50" font-family="Arial, sans-serif" font-size="20" fill="white" font-weight="bold">
+    RUN
+    </text>
+    <text x="60" y="75" font-family="Arial, sans-serif" font-size="20" fill="white" font-weight="bold">
+    METRICS
+    </text>
+</svg>
