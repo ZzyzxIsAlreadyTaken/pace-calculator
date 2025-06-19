@@ -17,41 +17,64 @@ const TimePicker: React.FC<TimePickerProps> = ({
   onMinutesChange,
   onSecondsChange,
 }) => {
+  const handleNumberChange = (
+    value: string,
+    max: number,
+    onChange: (value: string) => void,
+  ) => {
+    const num = parseInt(value) || 0;
+    if (num >= 0 && num <= max) {
+      onChange(num.toString());
+    }
+  };
+
   return (
-    <div className="flex space-x-2">
-      <select
-        className="w-1/3 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={hours}
-        onChange={(e) => onHoursChange(e.target.value)}
-      >
-        {Array.from({ length: 24 }, (_, i) => (
-          <option key={i} value={i}>
-            {i} hrs
-          </option>
-        ))}
-      </select>
-      <select
-        className="w-1/3 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={minutes}
-        onChange={(e) => onMinutesChange(e.target.value)}
-      >
-        {Array.from({ length: 60 }, (_, i) => (
-          <option key={i} value={i}>
-            {i} min
-          </option>
-        ))}
-      </select>
-      <select
-        className="w-1/3 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={seconds}
-        onChange={(e) => onSecondsChange(e.target.value)}
-      >
-        {Array.from({ length: 60 }, (_, i) => (
-          <option key={i} value={i}>
-            {i} sec
-          </option>
-        ))}
-      </select>
+    <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center">
+        <input
+          type="number"
+          min="0"
+          max="23"
+          value={hours}
+          onChange={(e) =>
+            handleNumberChange(e.target.value, 23, onHoursChange)
+          }
+          className="w-24 px-4 py-2 text-center text-base border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+        />
+        <span className="text-sm text-gray-500 mt-1">hrs</span>
+      </div>
+
+      <div className="text-2xl text-gray-300 mx-1">:</div>
+
+      <div className="flex flex-col items-center">
+        <input
+          type="number"
+          min="0"
+          max="59"
+          value={minutes}
+          onChange={(e) =>
+            handleNumberChange(e.target.value, 59, onMinutesChange)
+          }
+          className="w-24 px-4 py-2 text-center text-base border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+        />
+        <span className="text-sm text-gray-500 mt-1">min</span>
+      </div>
+
+      <div className="text-2xl text-gray-300 mx-1">:</div>
+
+      <div className="flex flex-col items-center">
+        <input
+          type="number"
+          min="0"
+          max="59"
+          value={seconds}
+          onChange={(e) =>
+            handleNumberChange(e.target.value, 59, onSecondsChange)
+          }
+          className="w-24 px-4 py-2 text-center text-base border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+        />
+        <span className="text-sm text-gray-500 mt-1">sec</span>
+      </div>
     </div>
   );
 };

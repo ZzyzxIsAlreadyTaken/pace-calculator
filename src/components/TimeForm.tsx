@@ -56,19 +56,58 @@ export default function TimeForm({ unit }: TimeFormProps) {
   };
 
   return (
-    <>
-      <DistanceInput
-        unit={unit}
-        distance={distance}
-        distances={distances}
-        onDistanceChange={setDistance}
-        onPresetSelect={handlePreset}
-      />
-      <div className="mt-4">
-        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
-          Pace (min/{unit === "metric" ? "km" : "mi"})
-        </label>
-        <div className="flex space-x-2">
+    <div className="p-0">
+      {/* Header */}
+      <div className="bg-emerald-600 p-4 flex items-start space-x-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 text-white mt-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="12" r="1" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <div>
+          <h2 className="text-xl font-bold text-white">Time Calculator</h2>
+          <p className="text-base text-emerald-100">Predict your finish time</p>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-4 pb-6 space-y-2">
+        {/* How to use */}
+        <div className="bg-emerald-50 rounded-2xl p-6 text-emerald-900">
+          <div className="flex items-center space-x-3 mb-2">
+            <h3 className="text-base font-semibold">How to use</h3>
+          </div>
+          <p className="text-sm">
+            Predict your finish time based on distance and target pace.
+          </p>
+        </div>
+
+        {/* Distance */}
+        <div className="space-y-2">
+          <label className="block text-base font-semibold text-gray-900">
+            Distance ({unit === "metric" ? "km" : "mi"})
+          </label>
+          <DistanceInput
+            unit={unit}
+            distance={distance}
+            distances={distances}
+            onDistanceChange={setDistance}
+            onPresetSelect={handlePreset}
+          />
+        </div>
+
+        {/* Time */}
+        <div className="space-y-2 mt-4">
+          <label className="block text-base font-semibold text-gray-900">
+            Pace (min/{unit === "metric" ? "km" : "mi"})
+          </label>
           <TimePicker
             hours={paceMinutes}
             minutes={paceSeconds}
@@ -78,14 +117,18 @@ export default function TimeForm({ unit }: TimeFormProps) {
             onSecondsChange={() => {}}
           />
         </div>
+
+        {/* Calculate Button */}
+        <button
+          onClick={calculateTime}
+          className="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-2xl transition duration-200 flex items-center justify-center space-x-3"
+        >
+          <span>Calculate Time</span>
+        </button>
+
+        {/* Results */}
+        {time && <TimeResult time={time} />}
       </div>
-      <button
-        onClick={calculateTime}
-        className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition duration-200 mt-2"
-      >
-        Calculate Time
-      </button>
-      {time && <TimeResult time={time} />}
-    </>
+    </div>
   );
 }

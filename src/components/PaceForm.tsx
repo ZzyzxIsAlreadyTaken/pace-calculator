@@ -70,34 +70,78 @@ export default function PaceForm({ unit }: PaceFormProps) {
   };
 
   return (
-    <>
-      <DistanceInput
-        unit={unit}
-        distance={distance}
-        distances={distances}
-        onDistanceChange={setDistance}
-        onPresetSelect={handlePreset}
-      />
-      <div className="mt-4">
-        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
-          Time
-        </label>
-        <TimePicker
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-          onHoursChange={setHours}
-          onMinutesChange={setMinutes}
-          onSecondsChange={setSeconds}
-        />
+    <div className="p-0">
+      {/* Header */}
+      <div className="bg-blue-600 p-4 flex items-start space-x-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 text-white mt-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <div>
+          <h2 className="text-xl font-bold text-white">Pace Calculator</h2>
+          <p className="text-base text-blue-100">Calculate your running pace</p>
+        </div>
       </div>
-      <button
-        onClick={calculatePace}
-        className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition duration-200 mt-2"
-      >
-        Calculate Pace
-      </button>
-      {pace && <PaceResult pace={pace} paceConverted={paceConverted} />}
-    </>
+
+      {/* Content */}
+      <div className="p-4 pb-6 space-y-2">
+        {/* How to use */}
+        <div className="bg-blue-50 rounded-2xl p-6 text-blue-900">
+          <div className="flex items-center space-x-3 mb-2">
+            <h3 className="text-base font-semibold">How to use</h3>
+          </div>
+          <p className="text-sm">
+            Calculate your running pace based on distance and time.
+          </p>
+        </div>
+
+        {/* Distance */}
+        <div className="space-y-2">
+          <label className="block text-base font-semibold text-gray-900">
+            Distance ({unit === "metric" ? "km" : "mi"})
+          </label>
+          <DistanceInput
+            unit={unit}
+            distance={distance}
+            distances={distances}
+            onDistanceChange={setDistance}
+            onPresetSelect={handlePreset}
+          />
+        </div>
+
+        {/* Time */}
+        <div className="space-y-2 mt-4">
+          <label className="block text-base font-semibold text-gray-900">
+            Finish Time
+          </label>
+          <TimePicker
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+            onHoursChange={setHours}
+            onMinutesChange={setMinutes}
+            onSecondsChange={setSeconds}
+          />
+        </div>
+
+        {/* Calculate Button */}
+        <button
+          onClick={calculatePace}
+          className="w-full mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-2xl transition duration-200 flex items-center justify-center space-x-3"
+        >
+          <span>Calculate Pace</span>
+        </button>
+
+        {/* Results */}
+        {pace && <PaceResult pace={pace} paceConverted={paceConverted} />}
+      </div>
+    </div>
   );
 }

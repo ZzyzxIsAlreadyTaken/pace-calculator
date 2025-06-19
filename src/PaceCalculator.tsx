@@ -26,13 +26,13 @@ const PaceCalculator = () => {
             Pace Calculator
           </Button>
           <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "time" ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "time" ? "bg-emerald-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
             onClick={() => setActiveTab("time")}
           >
             Time Calculator
           </Button>
           <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "riegel" ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "riegel" ? "bg-purple-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
             onClick={() => setActiveTab("riegel")}
           >
             Riegel's Formula
@@ -42,39 +42,14 @@ const PaceCalculator = () => {
 
       {/* Main Card */}
       <main className="flex flex-col items-center">
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-200 mb-10">
-          <div className="bg-blue-600 rounded-t-3xl px-6 py-4 flex items-center space-x-3">
-            <img
-              src="/src/assets/runmetrics.png"
-              alt="Runmetrics"
-              className="w-8 h-8"
-            />
-            <div>
-              <h2 className="text-xl font-bold text-white">
-                {activeTab === "pace"
-                  ? "Pace Calculator"
-                  : activeTab === "time"
-                    ? "Time Calculator"
-                    : "Riegel's Formula"}
-              </h2>
-              <p className="text-xs text-blue-100">
-                {activeTab === "pace"
-                  ? "Calculate your running pace"
-                  : activeTab === "time"
-                    ? "Predict your finish time"
-                    : "Predict performance at different distances"}
-              </p>
-            </div>
-          </div>
-          <div className="px-8 py-8">
-            {activeTab === "pace" ? (
-              <PaceForm unit={unit as "metric" | "imperial"} />
-            ) : activeTab === "riegel" ? (
-              <RiegelForm unit={unit as "metric" | "imperial"} />
-            ) : activeTab === "time" ? (
-              <TimeForm unit={unit as "metric" | "imperial"} />
-            ) : null}
-          </div>
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-200 mb-10 overflow-hidden">
+          {activeTab === "pace" ? (
+            <PaceForm unit={unit as "metric" | "imperial"} />
+          ) : activeTab === "riegel" ? (
+            <RiegelForm unit={unit as "metric" | "imperial"} />
+          ) : activeTab === "time" ? (
+            <TimeForm unit={unit as "metric" | "imperial"} />
+          ) : null}
         </div>
 
         {/* Info Cards */}
