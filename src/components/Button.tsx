@@ -19,7 +19,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = "",
   ...props
 }) => (
-  <button className={`${base} ${variants[variant]} ${className}`} {...props} />
+  <button className={className || `${base} ${variants[variant]}`} {...props} />
 );
 
 export default Button;

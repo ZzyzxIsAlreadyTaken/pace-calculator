@@ -20,19 +20,31 @@ const PaceCalculator = () => {
       <nav className="flex justify-center mt-8 mb-8">
         <div className="flex w-full max-w-2xl bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
           <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "pace" ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
+              activeTab === "pace"
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
             onClick={() => setActiveTab("pace")}
           >
             Pace Calculator
           </Button>
           <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "time" ? "bg-emerald-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
+              activeTab === "time"
+                ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
             onClick={() => setActiveTab("time")}
           >
             Time Calculator
           </Button>
           <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "riegel" ? "bg-purple-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
+              activeTab === "riegel"
+                ? "bg-purple-600 text-white hover:bg-purple-700"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
             onClick={() => setActiveTab("riegel")}
           >
             Riegel's Formula
@@ -45,11 +57,11 @@ const PaceCalculator = () => {
         <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-200 mb-10 overflow-hidden">
           {activeTab === "pace" ? (
             <PaceForm unit={unit as "metric" | "imperial"} />
-          ) : activeTab === "riegel" ? (
-            <RiegelForm unit={unit as "metric" | "imperial"} />
           ) : activeTab === "time" ? (
             <TimeForm unit={unit as "metric" | "imperial"} />
-          ) : null}
+          ) : (
+            <RiegelForm unit={unit as "metric" | "imperial"} />
+          )}
         </div>
 
         {/* Info Cards */}
