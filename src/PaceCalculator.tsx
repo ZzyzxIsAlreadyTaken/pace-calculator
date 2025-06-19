@@ -1,96 +1,107 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RiegelForm from "./components/RiegelForm";
 import PaceForm from "./components/PaceForm";
 import TimeForm from "./components/TimeForm";
 import { Button } from "./components/Button";
+import Header from "./components/Header";
 
 const PaceCalculator = () => {
   const [activeTab, setActiveTab] = useState("pace"); // 'pace', 'time', 'riegel'
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check if user has a saved preference
-    const savedMode = localStorage.getItem("darkMode");
-    // Check if user prefers dark mode
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-    return savedMode ? savedMode === "true" : prefersDark;
-  });
-
-  useEffect(() => {
-    if (darkMode) {
-      // To enable dark mode:
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      // To enable light mode:
-      document.documentElement.setAttribute("data-theme", "light");
-    }
-    // Save preference to localStorage
-    localStorage.setItem("darkMode", darkMode.toString());
-  }, [darkMode]);
+  const [unit, setUnit] = useState("metric"); // 'metric' or 'imperial'
 
   return (
-    <div className="max-w-md mx-auto mt-12 px-6 py-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700">
-      <div className="flex justify-end mb-2">
-        <Button
-          onClick={() => setDarkMode((d) => !d)}
-          className="px-3 py-1 rounded-lg border bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-        >
-          {darkMode ? "☀️" : "🌙"}
-        </Button>
-      </div>
-      <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
-        <img
-          src="/src/assets/runmetrics.png"
-          alt="Runmetrics"
-          className="w-10 h-10 inline-block mr-2"
-        />
-        Runmetrics
-      </h2>
+    <div className="min-h-screen bg-gray-50">
+      <Header
+        unit={unit as "metric" | "imperial"}
+        onUnitToggle={() => setUnit(unit === "metric" ? "imperial" : "metric")}
+      />
 
-      <div className="flex justify-center mb-6 space-x-4">
-        <Button
-          className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${
-            activeTab === "pace"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
-          }`}
-          onClick={() => {
-            setActiveTab("pace");
-          }}
-        >
-          Calculate Pace
-        </Button>
-        <Button
-          className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${
-            activeTab === "time"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
-          }`}
-          onClick={() => {
-            setActiveTab("time");
-          }}
-        >
-          Calculate Time
-        </Button>
-        <Button
-          className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${
-            activeTab === "riegel"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("riegel")}
-        >
-          Riegel's Formula
-        </Button>
-      </div>
+      {/* Tabs */}
+      <nav className="flex justify-center mt-8 mb-8">
+        <div className="flex w-full max-w-2xl bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+          <Button
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "pace" ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            onClick={() => setActiveTab("pace")}
+          >
+            Pace Calculator
+          </Button>
+          <Button
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "time" ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            onClick={() => setActiveTab("time")}
+          >
+            Time Calculator
+          </Button>
+          <Button
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${activeTab === "riegel" ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"}`}
+            onClick={() => setActiveTab("riegel")}
+          >
+            Riegel's Formula
+          </Button>
+        </div>
+      </nav>
 
-      {activeTab === "pace" ? (
-        <PaceForm />
-      ) : activeTab === "riegel" ? (
-        <RiegelForm />
-      ) : activeTab === "time" ? (
-        <TimeForm />
-      ) : null}
+      {/* Main Card */}
+      <main className="flex flex-col items-center">
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-200 mb-10">
+          <div className="bg-blue-600 rounded-t-3xl px-6 py-4 flex items-center space-x-3">
+            <img
+              src="/src/assets/runmetrics.png"
+              alt="Runmetrics"
+              className="w-8 h-8"
+            />
+            <div>
+              <h2 className="text-xl font-bold text-white">
+                {activeTab === "pace"
+                  ? "Pace Calculator"
+                  : activeTab === "time"
+                    ? "Time Calculator"
+                    : "Riegel's Formula"}
+              </h2>
+              <p className="text-xs text-blue-100">
+                {activeTab === "pace"
+                  ? "Calculate your running pace"
+                  : activeTab === "time"
+                    ? "Predict your finish time"
+                    : "Predict performance at different distances"}
+              </p>
+            </div>
+          </div>
+          <div className="px-8 py-8">
+            {activeTab === "pace" ? (
+              <PaceForm unit={unit as "metric" | "imperial"} />
+            ) : activeTab === "riegel" ? (
+              <RiegelForm unit={unit as "metric" | "imperial"} />
+            ) : activeTab === "time" ? (
+              <TimeForm unit={unit as "metric" | "imperial"} />
+            ) : null}
+          </div>
+        </div>
+
+        {/* Info Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mb-16">
+          <div className="bg-white rounded-xl shadow border border-gray-200 p-6 text-center">
+            <h3 className="font-semibold text-lg mb-2">Pace Calculator</h3>
+            <p className="text-gray-500 text-sm">
+              Calculate your running pace based on your finish time and
+              distance. Perfect for analyzing past performances.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl shadow border border-gray-200 p-6 text-center">
+            <h3 className="font-semibold text-lg mb-2">Time Calculator</h3>
+            <p className="text-gray-500 text-sm">
+              Predict your finish time for a given distance based on your target
+              pace. Great for race planning.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl shadow border border-gray-200 p-6 text-center">
+            <h3 className="font-semibold text-lg mb-2">Riegel's Formula</h3>
+            <p className="text-gray-500 text-sm">
+              Predict performance at different distances using a proven
+              mathematical formula based on your known race times.
+            </p>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

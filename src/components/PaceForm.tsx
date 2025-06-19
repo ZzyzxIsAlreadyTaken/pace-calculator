@@ -1,7 +1,6 @@
 import { useState } from "react";
 import DistanceInput from "./DistanceInput";
 import TimePicker from "./TimePicker";
-import UnitToggle from "./UnitToggle";
 import PaceResult from "./PaceResult";
 
 const KM_IN_MI = 1.60934;
@@ -24,8 +23,11 @@ function formatPace(pacePerUnit: number) {
   return `${paceMinutes}:${paceSeconds.toString().padStart(2, "0")}`;
 }
 
-export default function PaceForm() {
-  const [unit, setUnit] = useState("metric");
+interface PaceFormProps {
+  unit: "metric" | "imperial";
+}
+
+export default function PaceForm({ unit }: PaceFormProps) {
   const [distance, setDistance] = useState("");
   const [hours, setHours] = useState("0");
   const [minutes, setMinutes] = useState("0");
@@ -61,17 +63,6 @@ export default function PaceForm() {
     );
   };
 
-  const handleUnitToggle = () => {
-    const dist = parseFloat(distance);
-    const newUnit = unit === "metric" ? "imperial" : "metric";
-    const converted = newUnit === "metric" ? dist * KM_IN_MI : dist * MI_IN_KM;
-    const convertedDistance = dist ? converted.toFixed(2) : "";
-    setDistance(convertedDistance);
-    setUnit(newUnit);
-    setPace("");
-    setPaceConverted("");
-  };
-
   const handlePreset = (value: number) => {
     setDistance(value.toString());
     setPace("");
@@ -80,7 +71,6 @@ export default function PaceForm() {
 
   return (
     <>
-      <UnitToggle unit={unit} onToggle={handleUnitToggle} />
       <DistanceInput
         unit={unit}
         distance={distance}

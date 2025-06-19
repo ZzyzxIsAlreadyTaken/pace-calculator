@@ -2,21 +2,21 @@ import { useState } from "react";
 
 const KM_IN_MI = 1.60934;
 
-export default function RiegelForm() {
+interface RiegelFormProps {
+  unit: "metric" | "imperial";
+}
+
+export default function RiegelForm({ unit }: RiegelFormProps) {
   const [riegelPrevDistance, setRiegelPrevDistance] = useState(5);
-  const [riegelPrevUnit, setRiegelPrevUnit] = useState("metric");
   const [riegelPrevHours, setRiegelPrevHours] = useState("0");
   const [riegelPrevMinutes, setRiegelPrevMinutes] = useState("25");
   const [riegelPrevSeconds, setRiegelPrevSeconds] = useState("0");
   const [riegelTargetDistance, setRiegelTargetDistance] = useState(10);
-  const [riegelTargetUnit, setRiegelTargetUnit] = useState("metric");
   const [riegelResult, setRiegelResult] = useState("");
 
   const handleRiegelCalculate = () => {
-    const d1 =
-      riegelPrevDistance * (riegelPrevUnit === "metric" ? 1 : KM_IN_MI);
-    const d2 =
-      riegelTargetDistance * (riegelTargetUnit === "metric" ? 1 : KM_IN_MI);
+    const d1 = riegelPrevDistance * (unit === "metric" ? 1 : KM_IN_MI);
+    const d2 = riegelTargetDistance * (unit === "metric" ? 1 : KM_IN_MI);
     const t1 =
       parseInt(riegelPrevHours) * 3600 +
       parseInt(riegelPrevMinutes) * 60 +
@@ -53,18 +53,13 @@ export default function RiegelForm() {
           <input
             type="number"
             step="any"
-            className="w-2/3 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={riegelPrevDistance}
             onChange={(e) => setRiegelPrevDistance(Number(e.target.value))}
           />
-          <select
-            className="w-1/3 px-2 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={riegelPrevUnit}
-            onChange={(e) => setRiegelPrevUnit(e.target.value)}
-          >
-            <option value="metric">km</option>
-            <option value="imperial">mi</option>
-          </select>
+          <div className="w-20 px-4 py-2 text-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+            {unit === "metric" ? "km" : "mi"}
+          </div>
         </div>
       </div>
       <div>
@@ -115,18 +110,13 @@ export default function RiegelForm() {
           <input
             type="number"
             step="any"
-            className="w-2/3 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={riegelTargetDistance}
             onChange={(e) => setRiegelTargetDistance(Number(e.target.value))}
           />
-          <select
-            className="w-1/3 px-2 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={riegelTargetUnit}
-            onChange={(e) => setRiegelTargetUnit(e.target.value)}
-          >
-            <option value="metric">km</option>
-            <option value="imperial">mi</option>
-          </select>
+          <div className="w-20 px-4 py-2 text-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+            {unit === "metric" ? "km" : "mi"}
+          </div>
         </div>
       </div>
       <button

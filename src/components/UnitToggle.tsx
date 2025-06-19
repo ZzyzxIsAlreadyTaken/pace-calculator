@@ -8,13 +8,22 @@ interface UnitToggleProps {
 
 const UnitToggle: React.FC<UnitToggleProps> = ({ unit, onToggle }) => {
   return (
-    <div className="flex items-center justify-between mb-4">
-      <span className="text-sm font-semibold text-gray-700 dark:text-gray-100">
-        Unit: {unit === "metric" ? "Kilometers" : "Miles"}
+    <div className="flex items-center bg-gray-50 rounded-full px-4 py-2">
+      <span
+        className={`text-sm font-medium mr-3 ${unit === "imperial" ? "text-gray-900" : "text-gray-500"}`}
+      >
+        Miles
       </span>
-      <Switch onClick={onToggle}>
-        Toggle to {unit === "metric" ? "Miles" : "Kilometers"}
-      </Switch>
+      <Switch
+        checked={unit === "metric"}
+        onCheckedChange={onToggle}
+        className="data-[state=checked]:bg-blue-600"
+      />
+      <span
+        className={`text-sm font-medium ml-3 ${unit === "metric" ? "text-gray-900" : "text-gray-500"}`}
+      >
+        Kilometers
+      </span>
     </div>
   );
 };
