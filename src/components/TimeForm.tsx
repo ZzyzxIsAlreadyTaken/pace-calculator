@@ -3,9 +3,6 @@ import DistanceInput from "./DistanceInput";
 import TimePicker from "./TimePicker";
 import TimeResult from "./TimeResult";
 
-const KM_IN_MI = 1.60934;
-const MI_IN_KM = 1 / KM_IN_MI;
-
 const distances = [
   { label: "1 km (0.62 mi)", value: 1 },
   { label: "5 km (3.11 mi)", value: 5 },
@@ -23,29 +20,30 @@ interface TimeFormProps {
 
 export default function TimeForm({ unit }: TimeFormProps) {
   const [distance, setDistance] = useState("");
-  const [paceMinutes, setPaceMinutes] = useState("5");
-  const [paceSeconds, setPaceSeconds] = useState("0");
+  const [timeHours, setTimeHours] = useState("0");
+  const [timeMinutes, setTimeMinutes] = useState("0");
+  const [timeSeconds, setTimeSeconds] = useState("0");
   const [time, setTime] = useState("");
 
   const calculateTime = () => {
     const dist = parseFloat(distance.replace(",", "."));
-    const paceTotal = parseInt(paceMinutes) + parseInt(paceSeconds) / 60;
-    if (!dist || !paceTotal) {
+    const paceInSeconds =
+      parseInt(timeHours) * 3600 +
+      parseInt(timeMinutes) * 60 +
+      parseInt(timeSeconds);
+
+    if (!dist || !paceInSeconds) {
       setTime("");
       return;
     }
 
-    let totalMinutes;
-    if (unit === "metric") {
-      totalMinutes = dist * paceTotal;
-    } else {
-      const pacePerKm = paceTotal * MI_IN_KM;
-      totalMinutes = dist * pacePerKm;
-    }
+    // Calculate total time in seconds
+    const totalSeconds = paceInSeconds * dist;
 
-    const h = Math.floor(totalMinutes / 60);
-    const m = Math.floor(totalMinutes % 60);
-    const s = Math.round((totalMinutes - h * 60 - m) * 60);
+    // Convert to hours, minutes, seconds
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = Math.round(totalSeconds % 60);
 
     setTime(`${h}h ${m}m ${s}s`);
   };
@@ -109,12 +107,12 @@ export default function TimeForm({ unit }: TimeFormProps) {
             Pace (min/{unit === "metric" ? "km" : "mi"})
           </label>
           <TimePicker
-            hours={paceMinutes}
-            minutes={paceSeconds}
-            seconds={"0"}
-            onHoursChange={setPaceMinutes}
-            onMinutesChange={setPaceSeconds}
-            onSecondsChange={() => {}}
+            hours={timeHours}
+            minutes={timeMinutes}
+            seconds={timeSeconds}
+            onHoursChange={setTimeHours}
+            onMinutesChange={setTimeMinutes}
+            onSecondsChange={setTimeSeconds}
           />
         </div>
 

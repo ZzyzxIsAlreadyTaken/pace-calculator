@@ -8,11 +8,11 @@ interface RiegelFormProps {
 }
 
 export default function RiegelForm({ unit }: RiegelFormProps) {
-  const [riegelPrevDistance, setRiegelPrevDistance] = useState(5);
+  const [riegelPrevDistance, setRiegelPrevDistance] = useState(0);
   const [riegelPrevHours, setRiegelPrevHours] = useState("0");
-  const [riegelPrevMinutes, setRiegelPrevMinutes] = useState("25");
+  const [riegelPrevMinutes, setRiegelPrevMinutes] = useState("0");
   const [riegelPrevSeconds, setRiegelPrevSeconds] = useState("0");
-  const [riegelTargetDistance, setRiegelTargetDistance] = useState(10);
+  const [riegelTargetDistance, setRiegelTargetDistance] = useState(0);
   const [riegelResult, setRiegelResult] = useState("");
 
   const handleRiegelCalculate = () => {
