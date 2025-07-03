@@ -8,14 +8,29 @@ interface RiegelFormProps {
 }
 
 export default function RiegelForm({ unit }: RiegelFormProps) {
-  const [riegelPrevDistance, setRiegelPrevDistance] = useState(0);
-  const [riegelPrevHours, setRiegelPrevHours] = useState("0");
-  const [riegelPrevMinutes, setRiegelPrevMinutes] = useState("0");
-  const [riegelPrevSeconds, setRiegelPrevSeconds] = useState("0");
-  const [riegelTargetDistance, setRiegelTargetDistance] = useState(0);
+  const [riegelPrevDistance, setRiegelPrevDistance] = useState<
+    number | undefined
+  >();
+  const [riegelPrevHours, setRiegelPrevHours] = useState<string>("");
+  const [riegelPrevMinutes, setRiegelPrevMinutes] = useState<string>("");
+  const [riegelPrevSeconds, setRiegelPrevSeconds] = useState<string>("");
+  const [riegelTargetDistance, setRiegelTargetDistance] = useState<
+    number | undefined
+  >();
   const [riegelResult, setRiegelResult] = useState("");
 
   const handleRiegelCalculate = () => {
+    if (
+      !riegelPrevDistance ||
+      !riegelTargetDistance ||
+      !riegelPrevHours ||
+      !riegelPrevMinutes ||
+      !riegelPrevSeconds
+    ) {
+      setRiegelResult("");
+      return;
+    }
+
     const d1 = riegelPrevDistance * (unit === "metric" ? 1 : KM_IN_MI);
     const d2 = riegelTargetDistance * (unit === "metric" ? 1 : KM_IN_MI);
     const t1 =
