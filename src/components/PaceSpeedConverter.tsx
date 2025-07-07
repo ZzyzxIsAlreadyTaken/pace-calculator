@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TimePicker from "./TimePicker";
 
 const KM_IN_MI = 1.60934;
@@ -8,7 +8,7 @@ interface MstoKMTorMilesFormProps {
   unit: "metric" | "imperial";
 }
 
-export default function MinutesForm({ unit }: MstoKMTorMilesFormProps) {
+export default function PaceSpeedConverter({ unit }: MstoKMTorMilesFormProps) {
   const [inputMode, setInputMode] = useState<"pace" | "speed">("pace");
   const [paceHours, setPaceHours] = useState("0");
   const [paceMinutes, setPaceMinutes] = useState("0");

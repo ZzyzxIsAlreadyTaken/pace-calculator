@@ -2,7 +2,7 @@ import { useState } from "react";
 import RiegelForm from "./components/RiegelForm";
 import PaceForm from "./components/PaceForm";
 import TimeForm from "./components/TimeForm";
-import MinutesForm from "./components/MinutesSecondsToKMTOrMilesForm";
+import PaceSpeedConverter from "./components/PaceSpeedConverter";
 import { Button } from "./components/Button";
 import Header from "./components/Header";
 
@@ -10,7 +10,7 @@ import Header from "./components/Header";
 const formComponents = {
   pace: PaceForm,
   time: TimeForm,
-  minutes: MinutesForm,
+  paceSpeed: PaceSpeedConverter,
   riegel: RiegelForm,
 } as const;
 
@@ -50,13 +50,13 @@ const PaceCalculator = () => {
           </Button>
           <Button
             className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
-              activeTab === "minutes"
+              activeTab === "paceSpeed"
                 ? "bg-orange-600 text-white hover:bg-orange-700"
                 : "text-gray-700 hover:bg-gray-200"
             }`}
-            onClick={() => setActiveTab("minutes")}
+            onClick={() => setActiveTab("paceSpeed")}
           >
-            Minutes
+            Pace Speed Converter
           </Button>
           <Button
             className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
