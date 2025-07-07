@@ -2,8 +2,17 @@ import { useState } from "react";
 import RiegelForm from "./components/RiegelForm";
 import PaceForm from "./components/PaceForm";
 import TimeForm from "./components/TimeForm";
+import MinutesForm from "./components/MinutesSecondsToKMTOrMilesForm";
 import { Button } from "./components/Button";
 import Header from "./components/Header";
+
+// Form component mapping
+const formComponents = {
+  pace: PaceForm,
+  time: TimeForm,
+  minutes: MinutesForm,
+  riegel: RiegelForm,
+} as const;
 
 const PaceCalculator = () => {
   const [activeTab, setActiveTab] = useState("pace"); // 'pace', 'time', 'riegel'
@@ -41,6 +50,16 @@ const PaceCalculator = () => {
           </Button>
           <Button
             className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
+              activeTab === "minutes"
+                ? "bg-orange-600 text-white hover:bg-orange-700"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
+            onClick={() => setActiveTab("minutes")}
+          >
+            Minutes
+          </Button>
+          <Button
+            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
               activeTab === "riegel"
                 ? "bg-purple-600 text-white hover:bg-purple-700"
                 : "text-gray-700 hover:bg-gray-200"
@@ -55,13 +74,11 @@ const PaceCalculator = () => {
       {/* Main Card */}
       <main className="flex flex-col items-center px-0 sm:px-4">
         <div className="w-full sm:max-w-md bg-white sm:rounded-3xl shadow-xl border-x-0 border-t border-b sm:border sm:border-gray-200 mb-6 sm:mb-10 overflow-hidden">
-          {activeTab === "pace" ? (
-            <PaceForm unit={unit as "metric" | "imperial"} />
-          ) : activeTab === "time" ? (
-            <TimeForm unit={unit as "metric" | "imperial"} />
-          ) : (
-            <RiegelForm unit={unit as "metric" | "imperial"} />
-          )}
+          {(() => {
+            const FormComponent =
+              formComponents[activeTab as keyof typeof formComponents];
+            return <FormComponent unit={unit as "metric" | "imperial"} />;
+          })()}
         </div>
 
         {/* Info Cards */}
