@@ -3,8 +3,9 @@ import RiegelForm from "./components/RiegelForm";
 import PaceForm from "./components/PaceForm";
 import TimeForm from "./components/TimeForm";
 import PaceSpeedConverter from "./components/PaceSpeedConverter";
-import { Button } from "./components/Button";
 import Header from "./components/Header";
+import Tabs from "./components/Tabs";
+import type { TabType } from "./types";
 
 // Form component mapping
 const formComponents = {
@@ -15,8 +16,10 @@ const formComponents = {
 } as const;
 
 const PaceCalculator = () => {
-  const [activeTab, setActiveTab] = useState("pace"); // 'pace', 'time', 'riegel'
   const [unit, setUnit] = useState("metric"); // 'metric' or 'imperial'
+  const [activeTab, setActiveTab] = useState<TabType>("pace");
+
+  const FormComponent = formComponents[activeTab];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -26,59 +29,12 @@ const PaceCalculator = () => {
       />
 
       {/* Tabs */}
-      <nav className="flex justify-center mt-4 sm:mt-8 mb-4 sm:mb-8">
-        <div className="flex w-full sm:max-w-2xl bg-gray-100 sm:rounded-lg overflow-hidden border border-gray-200">
-          <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
-              activeTab === "pace"
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "text-gray-700 hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveTab("pace")}
-          >
-            Pace Calculator
-          </Button>
-          <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
-              activeTab === "time"
-                ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                : "text-gray-700 hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveTab("time")}
-          >
-            Time Calculator
-          </Button>
-          <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
-              activeTab === "paceSpeed"
-                ? "bg-orange-600 text-white hover:bg-orange-700"
-                : "text-gray-700 hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveTab("paceSpeed")}
-          >
-            Pace Speed Converter
-          </Button>
-          <Button
-            className={`flex-1 px-4 py-2 font-semibold transition-colors rounded-none ${
-              activeTab === "riegel"
-                ? "bg-purple-600 text-white hover:bg-purple-700"
-                : "text-gray-700 hover:bg-gray-200"
-            }`}
-            onClick={() => setActiveTab("riegel")}
-          >
-            Riegel's Formula
-          </Button>
-        </div>
-      </nav>
+      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Card */}
       <main className="flex flex-col items-center px-0 sm:px-4">
         <div className="w-full sm:max-w-md bg-white sm:rounded-3xl shadow-xl border-x-0 border-t border-b sm:border sm:border-gray-200 mb-6 sm:mb-10 overflow-hidden">
-          {(() => {
-            const FormComponent =
-              formComponents[activeTab as keyof typeof formComponents];
-            return <FormComponent unit={unit as "metric" | "imperial"} />;
-          })()}
+          <FormComponent unit={unit as "metric" | "imperial"} />
         </div>
 
         {/* Info Cards */}
